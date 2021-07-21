@@ -10,6 +10,7 @@ import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
 import { useUser } from "../hooks";
+import { useHistory } from "react-router-dom";
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -35,6 +36,7 @@ export default function SignIn() {
   const classes = useStyles();
   const [userData, setUserData] = useState({});
   const { login } = useUser();
+  const history = useHistory();
 
   function handleChangeFormField(e) {
     const tempUserData = userData;
@@ -45,7 +47,9 @@ export default function SignIn() {
   function handleSubmitForm(e) {
     e.preventDefault();
 
-    login(userData);
+    login(userData).then(() => {
+      history.push("/me");
+    });
   }
 
   return (
@@ -94,7 +98,7 @@ export default function SignIn() {
           </Button>
           <Grid container>
             <Grid item>
-              <Link href="#" variant="body2">
+              <Link href="/sign-up" variant="body2">
                 {"Don't have an account? Sign Up"}
               </Link>
             </Grid>

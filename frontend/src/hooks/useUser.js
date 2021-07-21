@@ -1,5 +1,6 @@
 import axios from "axios";
 import { useSnackbar } from "notistack";
+import jwt_decode from "jwt-decode";
 
 function useUser() {
   const { enqueueSnackbar } = useSnackbar();
@@ -15,6 +16,7 @@ function useUser() {
       .then((response) => {
         console.log(response.data.token);
         setToken(response.data.token);
+        localStorage.setItem("user_id", jwt_decode(response.data.token).sub);
         enqueueSnackbar("login successful", { variant: "success" });
       })
       .catch(() => {
@@ -34,9 +36,26 @@ function useUser() {
     axios.defaults.headers.common["Authorization"] = token;
   }
 
+  function users() {
+    return axios.post("users/get", {
+      user: localStorage.getItem("user_id"),
+    });
+  }
+
+  function links() {
+    return axios.get("links/get");
+  }
+
+  function createLink(link) {
+    return axios.get("links/newentry", link);
+  }
+
   return {
+    users,
+    links,
     login,
     register,
+    createLink,
   };
 }
 
