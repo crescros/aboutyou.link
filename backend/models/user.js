@@ -22,7 +22,8 @@ const UserSchema = new mongoose.Schema({
         addedAt: mongoose.SchemaTypes.Date,
         name: mongoose.SchemaTypes.String,
         description: mongoose.SchemaTypes.String
-    }]
+    }],
+    bio: mongoose.SchemaTypes.String
 });
 
 mongoose.model('User', UserSchema);
