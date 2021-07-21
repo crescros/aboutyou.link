@@ -5,16 +5,16 @@ const passport = require('passport');
 const utils = require('../utils');
 
 router.get('/protected', passport.authenticate('jwt', { session: false }), (req, res, next) => {
-    res.status(200).json({ success: true, msg: "You are successfully authenticated to this route!"});
+    res.json({ success: true, msg: "You are successfully authenticated to this route!"});
 });
 
 router.post('/login', function(req, res, next) {
     if(!req.body.username || !req.body.password)
-        return res.sendStatus(403).json({ success: false, msg: "no username or password has been provided"});
+        return res.json({ success: false, msg: "no username or password has been provided"});
     User.findOne({ username: req.body.username })
         .then((user) => {
             if (!user) {
-                return res.status(401).json({ success: false, msg: "could not find user" });
+                return res.json({ success: false, msg: "could not find user" });
             }
             
             const isValid = utils.validPassword(req.body.password, user.hash, user.salt);
@@ -23,9 +23,9 @@ router.post('/login', function(req, res, next) {
                 const tokenObject = utils.issueJWT(user);
                 res.set('Authorization', tokenObject.token);
                 //res.setHeader('Authorization', tokenObject.token);
-                res.status(200).json({ success: true, token: tokenObject.token, expiresIn: tokenObject.expires });
+                res.json({ success: true, token: tokenObject.token, expiresIn: tokenObject.expires });
             } else {
-                res.status(401).json({ success: false, msg: "you entered the wrong password" });
+                res.json({ success: false, msg: "you entered the wrong password" });
             }
 
         })
@@ -36,7 +36,7 @@ router.post('/login', function(req, res, next) {
 
 router.post('/register', function(req, res, next) {
     if(!req.body.password || !req.body.username || !req.body.email)
-        return res.send(401).json({ success: false, msg: "no password/email/name has been given" });
+        return res.json({ success: false, msg: "no password/email/name has been given" });
 
     const saltHash = utils.genPassword(req.body.password);
     

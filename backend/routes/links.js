@@ -5,7 +5,7 @@ const passport = require('passport');
 const utils = require('../utils');
 
 router.get('/protected', passport.authenticate('jwt', { session: false }), (req, res, next) => {
-    res.status(200).json({ success: true, msg: "You are successfully authenticated to this route!"});
+    res.json({ success: true, msg: "You are successfully authenticated to this route!"});
 });
 
 router.post('/newentry', async (req, res, next) => {
@@ -35,11 +35,11 @@ router.post('/newentry', async (req, res, next) => {
 
 router.get('/get', async (req, res, next) => {
     if(!req.headers.authorization)
-        return res.send(400).json({ success: false, msg: "you're not authenticated" });
+        return res.json({ success: false, msg: "you're not authenticated" });
     
     let token = utils.validateJWT(next, req.headers.authorization);
     let user = await User.findOne({ _id: token.sub });
-    if(!user) return res.sendStatus(400).json({ success: false, msg: "no user has been found" });
+    if(!user) return res.json({ success: false, msg: "no user has been found" });
 
     return res.json({ success: true, links: user.links });
 })
