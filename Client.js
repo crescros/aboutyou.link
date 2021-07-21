@@ -26,8 +26,14 @@ class Client {
         require('./config/passport')(passport);
 
         const limiter = rateLimit({
-            windowMs: 1000,
-            max: 1
+            windowMs: 500,
+            max: 100
+        });
+
+        app.use((req, res, next) => {
+            res.header("Access-Control-Allow-Origin", "*");
+            res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+            next();
         });
 
         app.use(limiter);
