@@ -1,8 +1,30 @@
 import React, { useState, useEffect } from "react";
 import { useUser } from "../hooks";
-import { Button, CircularProgress, TextField } from "@material-ui/core";
+import {
+  Button,
+  CircularProgress,
+  TextField,
+  Toolbar,
+  AppBar,
+  Typography,
+  Grid,
+} from "@material-ui/core";
+import { makeStyles } from "@material-ui/core/styles";
+
+const useStyles = makeStyles((theme) => ({
+  root: {
+    flexGrow: 1,
+  },
+  menuButton: {
+    marginRight: theme.spacing(2),
+  },
+  title: {
+    flexGrow: 1,
+  },
+}));
 
 export default function Profile() {
+  const classes = useStyles();
   const { users, logout, createLink } = useUser();
   const [userData, setUserData] = useState();
   const [newLinkData, setNewLinkData] = useState({});
@@ -32,28 +54,43 @@ export default function Profile() {
 
   return (
     <div>
-      <div>AboutYou</div>
+      <div className={classes.root}>
+        <AppBar position="static">
+          <Toolbar>
+            <div />
+            <Typography variant="h6" className={classes.title}>
+              AboutYou
+            </Typography>
+            <Button onClick={logout}>logout</Button>
+          </Toolbar>
+        </AppBar>
+      </div>
 
       {userData ? (
         <div>
-          <div>bio: {userData.bio}</div>
-          <div>email: {userData.email}</div>
-          <div> joined {new Date(userData.createdAt).toLocaleDateString()}</div>
+          <Grid container>
+            <Grid item xs={12} lg={8}>
+              <Typography variant="h4">{userData.username}</Typography>
+              <Typography gutterBottom>{userData.bio}</Typography>
+            </Grid>
+            <Grid item xs={12} lg={4}>
+              <Typography variant="body2">email: {userData.email}</Typography>
+              <Typography variant="body2">
+                {" "}
+                joined {new Date(userData.createdAt).toLocaleDateString()}
+              </Typography>
+            </Grid>
 
-          <br />
-          <br />
-          <br />
+            <Grid item xs={12}>
+              <div>links:</div>
+              {userData.links.map((link) => (
+                <div key={link._id}>
+                  <a href={link.link}>{link.name}</a> - {link.description}
+                </div>
+              ))}
+            </Grid>
+          </Grid>
 
-          <div>links:</div>
-          {userData.links.map((link) => (
-            <div key={link._id}>
-              <a href={link.link}>{link.name}</a>
-            </div>
-          ))}
-
-          <br />
-          <br />
-          <br />
           <br />
 
           <div>Add New Link</div>
@@ -103,10 +140,6 @@ export default function Profile() {
       ) : (
         <CircularProgress />
       )}
-
-      <div>
-        <Button onClick={logout}>logout</Button>
-      </div>
     </div>
   );
 }
