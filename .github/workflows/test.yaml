@@ -1,0 +1,14 @@
+
+name: docker-compose test
+
+on: 
+  push:
+    branches:
+      - main
+
+jobs:
+  newman:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@master
+      - run: docker-compose up -d
