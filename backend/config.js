@@ -1,8 +1,8 @@
 let config = { };
 
 config.mongodb = {
-    STRING: "mongodb://database:27017/aboutyou",
-    STRING_PROD: "mongodb://database:27017/aboutyou"
+    STRING: "mongodb://localhost:27017/aboutyou",
+    STRING_PROD: "mongodb://localhost:27017/aboutyou"
 }
 
 config.express = {
