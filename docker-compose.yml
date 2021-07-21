@@ -1,0 +1,27 @@
+version: '3.8'
+services: 
+  database:
+    image: mongo
+    restart: always 
+    volumes: 
+      - my_data:/data/db 
+  backend:
+    build: 
+      context: ./backend
+      dockerfile: Dockerfile
+    depends_on: 
+      - database
+    volumes: 
+      - /app/node_modules
+    ports: 
+      - "8081:8081"
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    depends_on:
+      - backend
+    ports:
+      - "3000:3000"
+volumes:
+    my_data:
