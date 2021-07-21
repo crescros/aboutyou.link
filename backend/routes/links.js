@@ -10,13 +10,13 @@ router.get('/protected', passport.authenticate('jwt', { session: false }), (req,
 
 router.post('/newentry', async (req, res, next) => {
     if(!req.headers.authorization)
-        return res.send(400).json({ success: false, msg: "you're not authenticated" });
+        return res.json({ success: false, msg: "you're not authenticated" });
     if(!req.body.link || !req.body.name)
-        return res.send(401).json({ success: false, msg: "no link/name has been given" });
+        return res.json({ success: false, msg: "no link/name has been given" });
 
     let token = utils.validateJWT(next, req.headers.authorization);
     let user = await User.findOne({ _id: token.sub });
-    if(!user) return res.sendStatus(400).json({ success: false, msg: "no user has been found" });
+    if(!user) return res.json({ success: false, msg: "no user has been found" });
 
     if(user.links.length >= 50)
         return res.json({ success: false, msg: "you can only have 50 links." });
