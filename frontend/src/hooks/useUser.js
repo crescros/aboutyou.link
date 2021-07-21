@@ -34,6 +34,7 @@ function useUser() {
 
   function setToken(token) {
     axios.defaults.headers.common["Authorization"] = token;
+    localStorage.setItem("token");
   }
 
   function users() {
