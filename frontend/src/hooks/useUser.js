@@ -1,8 +1,10 @@
 import axios from "axios";
 import { useSnackbar } from "notistack";
 import jwt_decode from "jwt-decode";
+import { useHistory } from "react-router-dom";
 
 function useUser() {
+  const history = useHistory();
   const { enqueueSnackbar } = useSnackbar();
 
   function login(user) {
@@ -14,7 +16,6 @@ function useUser() {
     return axios
       .post("users/login", user)
       .then((response) => {
-        console.log(response.data.token);
         setToken(response.data.token);
         localStorage.setItem("user_id", jwt_decode(response.data.token).sub);
         enqueueSnackbar("login successful", { variant: "success" });
@@ -22,6 +23,12 @@ function useUser() {
       .catch(() => {
         enqueueSnackbar("failed to connect to micron server", { variant: "error" });
       });
+  }
+
+  function logout() {
+    localStorage.clear();
+    history.push("/");
+    location.reload();
   }
 
   function register(user) {
@@ -34,11 +41,11 @@ function useUser() {
 
   function setToken(token) {
     axios.defaults.headers.common["Authorization"] = token;
-    localStorage.setItem("token");
+    localStorage.setItem("token", token);
   }
 
   function users() {
-    return axios.get("users/get?user=" + localStorage.getItem("user_id"));
+    return axios.get("users/get?user=" + localStorage.getItem("user_id"), {user: localStorage.getItem("user_id")});
   }
 
   function links() {
@@ -55,6 +62,7 @@ function useUser() {
     login,
     register,
     createLink,
+    logout
   };
 }
 
