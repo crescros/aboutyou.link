@@ -37,7 +37,7 @@ function useUser() {
   }
 
   function users() {
-    return axios.post("users/get", {
+    return axios.get("users/get", {
       user: localStorage.getItem("user_id"),
     });
   }
