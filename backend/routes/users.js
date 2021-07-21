@@ -83,7 +83,7 @@ router.post('/register', function(req, res, next) {
 
 router.get('/get', async function(req, res, next) {
     if(!req.query.user) return res.json({ success: false, msg: "no user id has been provided" });
-    return res.json({ success: true, user: await User.findOne({ _id: req.body.user }) });
+    return res.json({ success: true, user: await User.findOne({ _id: req.query.user }) });
 })
 
 module.exports = router;
