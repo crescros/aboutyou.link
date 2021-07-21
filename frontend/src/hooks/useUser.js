@@ -28,7 +28,7 @@ function useUser() {
     if (!user.username) return enqueueSnackbar("please type in your username");
     if (!user.password) return enqueueSnackbar("please type in your password");
     if (!user.email) return enqueueSnackbar("please type in your email");
-
+    console.log(user);
     return axios.post("users/register", user);
   }
 
