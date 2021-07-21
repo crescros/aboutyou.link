@@ -45,7 +45,9 @@ function useUser() {
   }
 
   function users() {
-    return axios.get("users/get?user=" + localStorage.getItem("user_id"), {user: localStorage.getItem("user_id")});
+    return axios.get("users/get?user=" + localStorage.getItem("user_id"), {
+      user: localStorage.getItem("user_id"),
+    });
   }
 
   function links() {
@@ -62,7 +64,7 @@ function useUser() {
     login,
     register,
     createLink,
-    logout
+    logout,
   };
 }
 
