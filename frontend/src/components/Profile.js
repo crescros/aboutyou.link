@@ -11,7 +11,7 @@ import {
   Box,
 } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
-import AccountCircleIcon from '@material-ui/icons/AccountCircle';
+import AccountCircleIcon from "@material-ui/icons/AccountCircle";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -30,7 +30,7 @@ export default function Profile() {
   const { users, logout, createLink } = useUser();
   const [userData, setUserData] = useState();
   const [newLinkData, setNewLinkData] = useState({});
-  const [showNewLink, setShowNewLink] = useState(false)
+  const [showNewLink, setShowNewLink] = useState(false);
 
   function handleChangeFormField(e) {
     const tempUserData = newLinkData;
@@ -57,7 +57,6 @@ export default function Profile() {
 
   return (
     <div>
-
       <div className={classes.root}>
         <AppBar position="static">
           <Toolbar>
@@ -70,13 +69,21 @@ export default function Profile() {
         </AppBar>
       </div>
       <Box pt={1} px={2}>
-
         {userData ? (
           <div>
             <Grid container>
-              <Grid item >
-                <Box alignContent={"center"} bgcolor="white" py={2} px={4} borderRadius={16}>
-                  <Typography variant="h4"><AccountCircleIcon color="primary" fontSize={"large"} />{userData.username}</Typography>
+              <Grid item>
+                <Box
+                  alignContent={"center"}
+                  bgcolor="white"
+                  py={2}
+                  px={4}
+                  borderRadius={16}
+                >
+                  <Typography variant="h4">
+                    <AccountCircleIcon color="primary" fontSize={"large"} />
+                    {userData.username}
+                  </Typography>
                   <Typography gutterBottom>{userData.bio}</Typography>
                   <Typography variant="body2">email: {userData.email}</Typography>
                   <Typography variant="body2">
@@ -88,11 +95,10 @@ export default function Profile() {
             </Grid>
 
             <Grid container justifyContent="center">
-
               <Grid item>
-                <Box alignContent={"center"} bgcolor="white"borderRadius={16} p={1}>
+                <Box alignContent={"center"} bgcolor="white" borderRadius={16} p={1}>
                   <Typography variant="caption">links</Typography>
-                  <Box  py={1} px={3} >
+                  <Box py={1} px={3}>
                     {userData.links.map((link) => (
                       <div key={link._id}>
                         <a href={link.link}>{link.name}</a> - {link.description}

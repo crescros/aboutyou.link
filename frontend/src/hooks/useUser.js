@@ -19,7 +19,7 @@ function useUser() {
         if (response.data.success) {
           setToken(response.data.token);
           localStorage.setItem("user_id", jwt_decode(response.data.token).sub);
-          history.push("/me")
+          history.push("/me");
         } else {
           enqueueSnackbar("failed to connect to micron server", { variant: "error" });
         }
@@ -37,7 +37,8 @@ function useUser() {
 
   function register(user) {
     if (!user.username) return enqueueSnackbar("please type in your username");
-    if (!user.password === user["confirm-password"]) return enqueueSnackbar("passwords do not match");
+    if (!user.password === user["confirm-password"])
+      return enqueueSnackbar("passwords do not match");
     if (!user.password) return enqueueSnackbar("please type in your password");
     if (!user.email) return enqueueSnackbar("please type in your email");
 
@@ -46,14 +47,14 @@ function useUser() {
       .then((res) => {
         if (res.data.success) {
           enqueueSnackbar("new user created", { variant: "success" });
-          history.push("/login")
+          history.push("/login");
         } else {
           enqueueSnackbar("failed to connect to micron server", { variant: "error" });
         }
       })
       .catch(() => {
         enqueueSnackbar("failed to connect to micron server", { variant: "error" });
-      });;
+      });
   }
 
   function setToken(token) {

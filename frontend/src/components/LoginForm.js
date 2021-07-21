@@ -9,7 +9,6 @@ import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
 import { useUser } from "../hooks";
-import { useHistory } from "react-router-dom";
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -35,7 +34,6 @@ export default function SignIn() {
   const classes = useStyles();
   const [userData, setUserData] = useState({});
   const { login } = useUser();
-  const history = useHistory();
 
   function handleChangeFormField(e) {
     const tempUserData = userData;

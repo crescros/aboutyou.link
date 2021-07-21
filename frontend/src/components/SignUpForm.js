@@ -10,7 +10,6 @@ import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
 import { useUser } from "../hooks";
-import { useHistory } from "react-router-dom";
 
 function Copyright() {
   return (
@@ -49,7 +48,6 @@ export default function SignUp() {
   const classes = useStyles();
   const [userData, setUserData] = useState({});
   const { register } = useUser();
-  const history = useHistory();
 
   function handleChangeFormField(e) {
     const tempUserData = userData;
