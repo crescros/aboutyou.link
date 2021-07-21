@@ -6,14 +6,13 @@ import Profile from "./Profile";
 import { useUser } from "../hooks";
 
 export default function Routes() {
-
-  const { setToken } = useUser()
+  const { setToken } = useUser();
 
   useEffect(() => {
     if (localStorage.getItem("token")) {
-      setToken(localStorage.getItem("token"))
+      setToken(localStorage.getItem("token"));
     }
-  }, [])
+  }, []);
 
   return (
     <Switch>

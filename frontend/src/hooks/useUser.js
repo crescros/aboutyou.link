@@ -65,7 +65,7 @@ function useUser() {
     register,
     createLink,
     logout,
-    setToken
+    setToken,
   };
 }
 
