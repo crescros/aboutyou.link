@@ -22,9 +22,6 @@ export default function Routes() {
       <Route path="/sign-up">
         <SignUp />
       </Route>
-      <Route path="/me">
-        <Profile />
-      </Route>
       <Route path="/" exact>
         {localStorage.getItem("token") ? <Profile /> : <LoginForm />}
       </Route>

@@ -19,7 +19,8 @@ function useUser() {
         if (response.data.success) {
           setToken(response.data.token);
           localStorage.setItem("user_id", jwt_decode(response.data.token).sub);
-          history.push("/me");
+          history.push("/");
+          location.reload();
         } else {
           enqueueSnackbar("failed to connect to micron server", { variant: "error" });
         }

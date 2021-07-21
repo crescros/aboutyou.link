@@ -64,7 +64,9 @@ export default function Profile() {
             <Typography variant="h6" className={classes.title}>
               AboutYou
             </Typography>
-            <Button onClick={logout}>logout</Button>
+            <Button onClick={logout} color="inherit">
+              logout
+            </Button>
           </Toolbar>
         </AppBar>
       </div>
