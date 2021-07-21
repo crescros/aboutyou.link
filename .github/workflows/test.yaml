@@ -1,5 +1,4 @@
-
-name: docker-compose test
+name: postman api tests
 
 on: 
   push:
@@ -12,3 +11,7 @@ jobs:
     steps:
       - uses: actions/checkout@master
       - run: docker-compose up -d
+      - uses: matt-ball/newman-action@master
+        with:
+          collection: ./tests/newman/aboutyou.postman_collection.json
+          environment: ./tests/newman/aboutyou.postman_environment.json
