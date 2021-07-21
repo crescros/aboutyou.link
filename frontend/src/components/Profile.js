@@ -8,8 +8,10 @@ import {
   AppBar,
   Typography,
   Grid,
+  Box,
 } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
+import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -28,6 +30,7 @@ export default function Profile() {
   const { users, logout, createLink } = useUser();
   const [userData, setUserData] = useState();
   const [newLinkData, setNewLinkData] = useState({});
+  const [showNewLink, setShowNewLink] = useState(false)
 
   function handleChangeFormField(e) {
     const tempUserData = newLinkData;
@@ -54,6 +57,7 @@ export default function Profile() {
 
   return (
     <div>
+
       <div className={classes.root}>
         <AppBar position="static">
           <Toolbar>
@@ -65,81 +69,89 @@ export default function Profile() {
           </Toolbar>
         </AppBar>
       </div>
+      <Box pt={1} px={2}>
 
-      {userData ? (
-        <div>
-          <Grid container>
-            <Grid item xs={12} lg={8}>
-              <Typography variant="h4">{userData.username}</Typography>
-              <Typography gutterBottom>{userData.bio}</Typography>
-            </Grid>
-            <Grid item xs={12} lg={4}>
-              <Typography variant="body2">email: {userData.email}</Typography>
-              <Typography variant="body2">
-                {" "}
-                joined {new Date(userData.createdAt).toLocaleDateString()}
-              </Typography>
+        {userData ? (
+          <div>
+            <Grid container>
+              <Grid item >
+                <Box alignContent={"center"} bgcolor="white" py={2} px={4} borderRadius={16}>
+                  <Typography variant="h4"><AccountCircleIcon color="primary" fontSize={"large"} />{userData.username}</Typography>
+                  <Typography gutterBottom>{userData.bio}</Typography>
+                  <Typography variant="body2">email: {userData.email}</Typography>
+                  <Typography variant="body2">
+                    {" "}
+                    joined {new Date(userData.createdAt).toLocaleDateString()}
+                  </Typography>
+                </Box>
+              </Grid>
             </Grid>
 
-            <Grid item xs={12}>
-              <div>links:</div>
-              {userData.links.map((link) => (
-                <div key={link._id}>
-                  <a href={link.link}>{link.name}</a> - {link.description}
+            <Grid container justifyContent="center">
+
+              <Grid item>
+                <Box alignContent={"center"} bgcolor="white"borderRadius={16} p={1}>
+                  <Typography variant="caption">links</Typography>
+                  <Box  py={1} px={3} >
+                    {userData.links.map((link) => (
+                      <div key={link._id}>
+                        <a href={link.link}>{link.name}</a> - {link.description}
+                      </div>
+                    ))}
+                  </Box>
+                </Box>
+              </Grid>
+            </Grid>
+
+            <br />
+
+            <Button onClick={() => setShowNewLink(!showNewLink)}>Add New Link</Button>
+
+            {showNewLink && (
+              <div>
+                <div>
+                  <TextField
+                    variant="outlined"
+                    required
+                    fullWidth
+                    id="name"
+                    label="Link Name"
+                    name="name"
+                    onChange={handleChangeFormField}
+                  />
                 </div>
-              ))}
-            </Grid>
-          </Grid>
-
-          <br />
-
-          <div>Add New Link</div>
-
-          <div>
-            <TextField
-              variant="outlined"
-              required
-              fullWidth
-              id="name"
-              label="Link Name"
-              name="name"
-              onChange={handleChangeFormField}
-            />
+                <div>
+                  <TextField
+                    variant="outlined"
+                    required
+                    fullWidth
+                    id="description"
+                    label="Link Description"
+                    name="description"
+                    onChange={handleChangeFormField}
+                  />
+                </div>
+                <div>
+                  <TextField
+                    variant="outlined"
+                    required
+                    fullWidth
+                    id="link"
+                    label="Link Url"
+                    name="link"
+                    onChange={handleChangeFormField}
+                  />
+                </div>
+                <div>
+                  <Button onClick={handleSubmitForm}>submit</Button>
+                </div>
+              </div>
+            )}
           </div>
-
-          <div>
-            <TextField
-              variant="outlined"
-              required
-              fullWidth
-              id="description"
-              label="Link Description"
-              name="description"
-              onChange={handleChangeFormField}
-            />
-          </div>
-
-          <div>
-            <TextField
-              variant="outlined"
-              required
-              fullWidth
-              id="link"
-              label="Link Url"
-              name="link"
-              onChange={handleChangeFormField}
-            />
-          </div>
-          <div>
-            <Button onClick={handleSubmitForm}>submit</Button>
-          </div>
-          <br />
-          <br />
-          <br />
-        </div>
-      ) : (
-        <CircularProgress />
-      )}
+        ) : (
+          <CircularProgress />
+        )}
+      </Box>
     </div>
   );
 }

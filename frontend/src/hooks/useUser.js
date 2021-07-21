@@ -16,9 +16,13 @@ function useUser() {
     return axios
       .post("users/login", user)
       .then((response) => {
-        setToken(response.data.token);
-        localStorage.setItem("user_id", jwt_decode(response.data.token).sub);
-        enqueueSnackbar("login successful", { variant: "success" });
+        if (response.data.success) {
+          setToken(response.data.token);
+          localStorage.setItem("user_id", jwt_decode(response.data.token).sub);
+          history.push("/me")
+        } else {
+          enqueueSnackbar("failed to connect to micron server", { variant: "error" });
+        }
       })
       .catch(() => {
         enqueueSnackbar("failed to connect to micron server", { variant: "error" });
@@ -33,10 +37,23 @@ function useUser() {
 
   function register(user) {
     if (!user.username) return enqueueSnackbar("please type in your username");
+    if (!user.password === user["confirm-password"]) return enqueueSnackbar("passwords do not match");
     if (!user.password) return enqueueSnackbar("please type in your password");
     if (!user.email) return enqueueSnackbar("please type in your email");
 
-    return axios.post("users/register", user);
+    return axios
+      .post("users/register", user)
+      .then((res) => {
+        if (res.data.success) {
+          enqueueSnackbar("new user created", { variant: "success" });
+          history.push("/login")
+        } else {
+          enqueueSnackbar("failed to connect to micron server", { variant: "error" });
+        }
+      })
+      .catch(() => {
+        enqueueSnackbar("failed to connect to micron server", { variant: "error" });
+      });;
   }
 
   function setToken(token) {

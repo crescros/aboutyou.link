@@ -60,9 +60,7 @@ export default function SignUp() {
   function handleSubmitForm(e) {
     e.preventDefault();
 
-    register(userData).then(() => {
-      history.push("/login");
-    });
+    register(userData);
   }
 
   return (
@@ -124,7 +122,7 @@ export default function SignUp() {
                 fullWidth
                 name="confirm-password"
                 label="Confirm Password"
-                type="confirm-password"
+                type="password"
                 id="confirm-password"
                 autoComplete="current-confirm-password"
                 onChange={handleChangeFormField}

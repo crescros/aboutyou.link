@@ -46,9 +46,7 @@ export default function SignIn() {
   function handleSubmitForm(e) {
     e.preventDefault();
 
-    login(userData).then(() => {
-      history.push("/me");
-    });
+    login(userData);
   }
 
   return (
