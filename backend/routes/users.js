@@ -67,7 +67,13 @@ router.post('/register', function(req, res, next) {
                         startDate: 0
                     },
                     links: [],
-                    bio: "Hello! I'm new to aboutyou.link :)"
+                    bio: "Hello! I'm new to aboutyou.link :)",
+                    ban: {
+                        banned: 0,
+                        by: 0,
+                        at: 0,
+                        reason: 0
+                    }
                 });
 
                 newUser.save()

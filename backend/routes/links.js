@@ -65,7 +65,7 @@ router.patch('/edit/:linkid', async (req, res, next) => {
     return res.json({ success: true, links: user.links });
 });
 
-router.delete("/delete/:linkid", async (req, res, next) => {
+router.delete("/:linkid", async (req, res, next) => {
     if(!req.headers.authorization)
         return res.json({ success: false, msg: "you're not authenticated" });
     
