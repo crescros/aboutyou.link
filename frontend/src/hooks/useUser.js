@@ -78,7 +78,7 @@ function useUser() {
   }
 
   function deleteLink(linkId) {
-    return axios.delete("links/delete/" + linkId);
+    return axios.delete("links/" + linkId);
   }
 
   return {
