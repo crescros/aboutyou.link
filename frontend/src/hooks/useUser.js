@@ -77,6 +77,10 @@ function useUser() {
     return axios.post("links/newentry", link);
   }
 
+  function deleteLink(linkId) {
+    return axios.delete("links/delete/" + linkId);
+  }
+
   return {
     users,
     links,
@@ -85,6 +89,7 @@ function useUser() {
     createLink,
     logout,
     setToken,
+    deleteLink,
   };
 }
 

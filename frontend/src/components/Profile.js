@@ -8,11 +8,11 @@ import {
   AppBar,
   Typography,
   Grid,
-  Box
+  Box,
 } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import AccountCircleIcon from "@material-ui/icons/AccountCircle";
-import Link from "./Link"
+import Link from "./Link";
 const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
@@ -103,7 +103,7 @@ export default function Profile() {
                   <Box py={1} px={3}>
                     {userData.links.map((link) => (
                       <div key={link._id}>
-                          <Link link={link} />
+                        <Link link={link} />
                       </div>
                     ))}
                   </Box>
