@@ -23,7 +23,13 @@ const UserSchema = new mongoose.Schema({
         name: mongoose.SchemaTypes.String,
         description: mongoose.SchemaTypes.String
     }],
-    bio: mongoose.SchemaTypes.String
+    bio: mongoose.SchemaTypes.String,
+    ban: {
+        banned: mongoose.SchemaTypes.Boolean,
+        by: mongoose.SchemaTypes.String,
+        at: mongoose.SchemaTypes.Date,
+        reason: mongoose.SchemaTypes.String
+    }
 });
 
 mongoose.model('User', UserSchema);
