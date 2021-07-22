@@ -1,31 +1,18 @@
 {
 	"info": {
-		"_postman_id": "ac46a0d7-60b9-4345-ab83-d03f039a7639",
+		"_postman_id": "405b078a-05a7-4620-94c9-02bf080c0e8b",
 		"name": "aboutyou.link",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
 	"item": [
 		{
 			"name": "register",
-			"event": [
-				{
-					"listen": "test",
-					"script": {
-						"exec": [
-							"pm.test(\"Successful POST request\", function () {\r",
-							"    pm.expect(pm.response.code).to.be.oneOf([200, 201, 202]);\r",
-							"});"
-						],
-						"type": "text/javascript"
-					}
-				}
-			],
 			"request": {
 				"method": "POST",
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"username\": \"test\",\r\n    \"password\": \"test\",\r\n    \"email\": \"alexa.matei.dev@icloud.com\"\r\n}",
+					"raw": "{\r\n    \"username\": \"test67\",\r\n    \"password\": \"test\",\r\n    \"email\": \"alexa.matei.dev@icloud.com\"\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -75,7 +62,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"username\": \"test\",\r\n    \"password\": \"test\"\r\n}",
+					"raw": "{\r\n    \"username\": \"test67\",\r\n    \"password\": \"test\"\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -99,19 +86,6 @@
 		},
 		{
 			"name": "create link",
-			"event": [
-				{
-					"listen": "test",
-					"script": {
-						"exec": [
-							"pm.test(\"Successful POST request\", function () {\r",
-							"    pm.expect(pm.response.code).to.be.oneOf([200, 201, 202]);\r",
-							"});"
-						],
-						"type": "text/javascript"
-					}
-				}
-			],
 			"request": {
 				"method": "POST",
 				"header": [],
@@ -141,19 +115,6 @@
 		},
 		{
 			"name": "get user links",
-			"event": [
-				{
-					"listen": "test",
-					"script": {
-						"exec": [
-							"pm.test(\"Successful POST request\", function () {\r",
-							"    pm.expect(pm.response.code).to.be.oneOf([200, 201, 202]);\r",
-							"});"
-						],
-						"type": "text/javascript"
-					}
-				}
-			],
 			"protocolProfileBehavior": {
 				"disableBodyPruning": true
 			},
@@ -186,19 +147,6 @@
 		},
 		{
 			"name": "get user",
-			"event": [
-				{
-					"listen": "test",
-					"script": {
-						"exec": [
-							"pm.test(\"Successful POST request\", function () {\r",
-							"    pm.expect(pm.response.code).to.be.oneOf([200, 201, 202]);\r",
-							"});"
-						],
-						"type": "text/javascript"
-					}
-				}
-			],
 			"protocolProfileBehavior": {
 				"disableBodyPruning": true
 			},
@@ -231,6 +179,76 @@
 							"key": "user",
 							"value": "{{userid}}"
 						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "edit link",
+			"request": {
+				"method": "PATCH",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"type\": \"name\",\r\n    \"newValue\": \"hihihi\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8081/links/edit/60f9715174181a51982bddc8",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8081",
+					"path": [
+						"links",
+						"edit",
+						"60f9715174181a51982bddc8"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "delete link",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8081/links/delete/60f9715174181a51982bddc8",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8081",
+					"path": [
+						"links",
+						"delete",
+						"60f9715174181a51982bddc8"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get user page",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8081/test",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8081",
+					"path": [
+						"test"
 					]
 				}
 			},
