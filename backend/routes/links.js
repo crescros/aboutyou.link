@@ -42,6 +42,41 @@ router.get('/get', async (req, res, next) => {
     if(!user) return res.json({ success: false, msg: "no user has been found" });
 
     return res.json({ success: true, links: user.links });
-})
+});
 
+router.patch('/edit/:linkid', async (req, res, next) => {
+    let editable = [ "name", "description", "link" ];
+    if(!req.headers.authorization)
+        return res.json({ success: false, msg: "you're not authenticated" });
+    
+    let token = utils.validateJWT(next, req.headers.authorization);
+    let user = await User.findOne({ _id: token.sub });
+    if(!user) return res.json({ success: false, msg: "no user has been found" });
+
+    if(!editable.includes(req.body.type)) return res.json({ sucess: false, msg: `you can only edit ${editable.join(", ")}.` });
+    if(!req.body.newValue) return res.json({ sucess: false, msg: "no newValue has been provided" });
+
+    user.links.forEach(link => {
+        if(link._id != req.params.linkid) return;
+        link[req.body.type] = req.body.newValue;
+        user.save();
+    })
+                                        
+    return res.json({ success: true, links: user.links });
+});
+
+router.delete("/delete/:linkid", async (req, res, next) => {
+    if(!req.headers.authorization)
+        return res.json({ success: false, msg: "you're not authenticated" });
+    
+    let token = utils.validateJWT(next, req.headers.authorization);
+    let user = await User.findOne({ _id: token.sub });
+    if(!user) return res.json({ success: false, msg: "no user has been found" });
+
+    //user.links.filter(link => link._id === req.params.linkid);
+    user.links = user.links.filter(link => link._id != req.params.linkid)
+    user.save();
+
+    return res.json({ success: true, links: user.links });
+})
 module.exports = router;

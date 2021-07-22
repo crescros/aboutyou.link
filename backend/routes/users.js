@@ -3,6 +3,7 @@ const router = require('express').Router();
 const User = mongoose.model('User');
 const passport = require('passport');
 const utils = require('../utils');
+const san = require('mongo-sanitize');
 
 router.get('/protected', passport.authenticate('jwt', { session: false }), (req, res, next) => {
     res.json({ success: true, msg: "You are successfully authenticated to this route!"});
@@ -83,7 +84,7 @@ router.post('/register', function(req, res, next) {
 
 router.get('/get', async function(req, res, next) {
     if(!req.query.user) return res.json({ success: false, msg: "no user id has been provided" });
-    return res.json({ success: true, user: await User.findOne({ _id: req.query.user }) });
+    return res.json({ success: true, user: await User.findOne({ _id: san(req.query.user) }) });
 })
 
 module.exports = router;
