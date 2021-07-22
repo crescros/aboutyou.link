@@ -78,5 +78,6 @@ router.delete("/delete/:linkid", async (req, res, next) => {
     user.save();
 
     return res.json({ success: true, links: user.links });
-})
+});
+
 module.exports = router;

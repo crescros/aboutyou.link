@@ -44,9 +44,9 @@ class Client {
 
         app.use(require('./routes'));
 
-        app.get('/', (req, res) => {
-            res.sendFile(__dirname + '/index.html');
-        });
+        // app.get('/', (req, res) => {
+        //     res.sendFile(__dirname + '/index.html');
+        // });
 
         server.listen(config.express.port, () => {
             console.log(`Listening to port ${config.express.port}.`);
