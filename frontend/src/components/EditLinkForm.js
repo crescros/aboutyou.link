@@ -28,12 +28,7 @@ export default function FormDialog({ link }) {
   };
   return (
     <span>
-      <IconButton
-        variant="outlined"
-        color="primary"
-        size="small"
-        onClick={handleClickOpen}
-      >
+      <IconButton size="small" onClick={handleClickOpen}>
         <MoreVertIcon fontSize="small" />
       </IconButton>
       <Dialog open={open} onClose={handleClose} aria-labelledby="form-dialog-title">
@@ -48,7 +43,7 @@ export default function FormDialog({ link }) {
           <Button onClick={handleClose} color="primary">
             Cancel
           </Button>
-          <Button onClick={handleDelete} color="primary">
+          <Button onClick={handleDelete} color="secondary">
             Delete
           </Button>
         </DialogActions>
