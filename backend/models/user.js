@@ -29,7 +29,12 @@ const UserSchema = new mongoose.Schema({
         by: mongoose.SchemaTypes.String,
         at: mongoose.SchemaTypes.Date,
         reason: mongoose.SchemaTypes.String
-    }
+    },
+    warns: [{
+        by: mongoose.SchemaTypes.String,
+        reason: mongoose.SchemaTypes.String,
+        at: mongoose.SchemaTypes.Date
+    }]
 });
 
 mongoose.model('User', UserSchema);

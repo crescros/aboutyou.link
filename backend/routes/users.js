@@ -73,7 +73,8 @@ router.post('/register', function(req, res, next) {
                         by: 0,
                         at: 0,
                         reason: 0
-                    }
+                    },
+                    warns: []
                 });
 
                 newUser.save()
