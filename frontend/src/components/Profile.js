@@ -92,6 +92,14 @@ export default function Profile() {
                     {" "}
                     joined {new Date(userData.createdAt).toLocaleDateString()}
                   </Typography>
+                  <Typography variant="body2">
+                    {" "}
+                    admin: {userData.isAdmin ? "Yes" : "No"}
+                  </Typography>
+                  <Typography variant="body2">
+                    {" "}
+                    verified: {userData.verified.is ? "Yes" : "No"}
+                  </Typography>
                 </Box>
               </Grid>
             </Grid>
