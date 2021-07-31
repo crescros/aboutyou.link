@@ -15,6 +15,9 @@ import { makeStyles } from "@material-ui/core/styles";
 import AccountCircleIcon from "@material-ui/icons/AccountCircle";
 import EditIcon from '@material-ui/icons/Edit';
 import Link from "./Link";
+import AddIcon from '@material-ui/icons/Add';
+
+
 const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
@@ -135,7 +138,7 @@ export default function Profile() {
 
             <br />
 
-            <Button onClick={() => setShowNewLink(!showNewLink)}>Add New Link</Button>
+            <Button onClick={() => setShowNewLink(!showNewLink)}><AddIcon/> Add New Link</Button>
 
             {showNewLink && (
               <div>
