@@ -1,9 +1,8 @@
-import React, { useState } from "react";
+import React from "react";
 import { Button } from "@material-ui/core";
 import EditLinkForm from "./EditLinkForm";
-export default function Link({ link }) {
 
-  const [editing, setEditing] = useState(false)
+export default function Link({ link }) {
 
   return (
     <div>
