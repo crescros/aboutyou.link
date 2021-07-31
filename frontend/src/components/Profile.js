@@ -9,9 +9,11 @@ import {
   Typography,
   Grid,
   Box,
+  IconButton,
 } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import AccountCircleIcon from "@material-ui/icons/AccountCircle";
+import EditIcon from '@material-ui/icons/Edit';
 import Link from "./Link";
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -31,6 +33,8 @@ export default function Profile() {
   const [userData, setUserData] = useState();
   const [newLinkData, setNewLinkData] = useState({});
   const [showNewLink, setShowNewLink] = useState(false);
+  const [editingBio, setEditingBio] = useState(false);
+  z`
 
   function handleChangeFormField(e) {
     const tempUserData = newLinkData;
@@ -86,7 +90,18 @@ export default function Profile() {
                     <AccountCircleIcon color="primary" fontSize={"large"} />
                     {userData.username}
                   </Typography>
-                  <Typography gutterBottom>{userData.bio}</Typography>
+                  <Box>
+                    {editingBio ?
+                      <TextField value={userData.bio}>
+
+                      </TextField>
+                      :
+                      <Typography gutterBottom component="span">
+                        {userData.bio}
+                      </Typography>
+                    }
+                    <IconButton size="small" onClick={() => setEditingBio(!editingBio)}><EditIcon fontSize="small" /></IconButton>
+                  </Box>
                   <Typography variant="body2">email: {userData.email}</Typography>
                   <Typography variant="body2">
                     {" "}
