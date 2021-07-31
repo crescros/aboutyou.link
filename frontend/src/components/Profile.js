@@ -34,8 +34,7 @@ export default function Profile() {
   const [newLinkData, setNewLinkData] = useState({});
   const [showNewLink, setShowNewLink] = useState(false);
   const [editingBio, setEditingBio] = useState(false);
-  z`
-
+  
   function handleChangeFormField(e) {
     const tempUserData = newLinkData;
     newLinkData[e.target.name] = e.target.value;
