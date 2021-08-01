@@ -80,6 +80,9 @@ function useUser() {
   function deleteLink(linkId) {
     return axios.delete("links/" + linkId);
   }
+  function updateUser(user) {
+    return axios.patch("users/edit", user);
+  }
 
   return {
     users,
@@ -90,6 +93,7 @@ function useUser() {
     logout,
     setToken,
     deleteLink,
+    updateUser,
   };
 }
 

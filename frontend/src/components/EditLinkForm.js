@@ -7,13 +7,12 @@ import DialogContent from "@material-ui/core/DialogContent";
 import DialogContentText from "@material-ui/core/DialogContentText";
 import DialogTitle from "@material-ui/core/DialogTitle";
 import MoreVertIcon from "@material-ui/icons/MoreVert";
-import EditIcon from '@material-ui/icons/Edit';
 
 import { useUser } from "../hooks";
 import { TextField } from "@material-ui/core";
 
 export default function FormDialog({ link }) {
-  const [editing, setEditing] = useState(false)
+  const [editing, setEditing] = useState(false);
   const [open, setOpen] = React.useState(false);
   const { deleteLink } = useUser();
 
@@ -40,18 +39,22 @@ export default function FormDialog({ link }) {
       </IconButton>
       <Dialog open={open} onClose={handleClose} aria-labelledby="form-dialog-title">
         <DialogTitle id="form-dialog-title">
-          {editing ? <TextField label="Name" value={link.name}></TextField> :
-            link.name
-          }
+          {editing ? <TextField label="Name" value={link.name}></TextField> : link.name}
         </DialogTitle>
         <DialogContent>
           <DialogContentText>
-            {editing ? <TextField label="Link" value={link.link}></TextField> :
+            {editing ? (
+              <TextField label="Link" value={link.link}></TextField>
+            ) : (
               <a href={link.link}>{link.link}</a>
-            }
+            )}
           </DialogContentText>
           <DialogContentText>
-            {editing ? <TextField label="Description" value={link.description}></TextField> : link.description}
+            {editing ? (
+              <TextField label="Description" value={link.description}></TextField>
+            ) : (
+              link.description
+            )}
           </DialogContentText>
         </DialogContent>
 

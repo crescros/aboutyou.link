@@ -13,10 +13,9 @@ import {
 } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import AccountCircleIcon from "@material-ui/icons/AccountCircle";
-import EditIcon from '@material-ui/icons/Edit';
+import EditIcon from "@material-ui/icons/Edit";
 import Link from "./Link";
-import AddIcon from '@material-ui/icons/Add';
-
+import AddIcon from "@material-ui/icons/Add";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -32,16 +31,17 @@ const useStyles = makeStyles((theme) => ({
 
 export default function Profile() {
   const classes = useStyles();
-  const { users, logout, createLink } = useUser();
+  const { users, logout, createLink, updateUser } = useUser();
   const [userData, setUserData] = useState();
   const [newLinkData, setNewLinkData] = useState({});
   const [showNewLink, setShowNewLink] = useState(false);
   const [editingBio, setEditingBio] = useState(false);
-  
+  const [tempBio, setTempBio] = useState("");
+
   function handleChangeFormField(e) {
-    const tempUserData = newLinkData;
+    const tempLinkData = newLinkData;
     newLinkData[e.target.name] = e.target.value;
-    setNewLinkData(tempUserData);
+    setNewLinkData(tempLinkData);
   }
 
   function handleSubmitForm(e) {
@@ -55,6 +55,21 @@ export default function Profile() {
     users().then((res) => {
       setUserData(res.data.user);
     });
+  }
+
+  function handleEditBio() {
+    if (editingBio) {
+      updateUser({ bio: tempBio }).then(() => {
+        getLinks();
+      });
+    } else {
+      setTempBio(userData.bio);
+    }
+    setEditingBio(!editingBio);
+  }
+
+  function handleChangeBio(e) {
+    setTempBio(e.target.value);
   }
 
   useEffect(() => {
@@ -93,16 +108,16 @@ export default function Profile() {
                     {userData.username}
                   </Typography>
                   <Box>
-                    {editingBio ?
-                      <TextField value={userData.bio}>
-
-                      </TextField>
-                      :
+                    {editingBio ? (
+                      <TextField value={tempBio} onChange={handleChangeBio}></TextField>
+                    ) : (
                       <Typography gutterBottom component="span">
                         {userData.bio}
                       </Typography>
-                    }
-                    <IconButton size="small" onClick={() => setEditingBio(!editingBio)}><EditIcon fontSize="small" /></IconButton>
+                    )}
+                    <IconButton size="small" onClick={handleEditBio}>
+                      <EditIcon fontSize="small" />
+                    </IconButton>
                   </Box>
                   <Typography variant="body2">email: {userData.email}</Typography>
                   <Typography variant="body2">
@@ -138,7 +153,9 @@ export default function Profile() {
 
             <br />
 
-            <Button onClick={() => setShowNewLink(!showNewLink)}><AddIcon/> Add New Link</Button>
+            <Button onClick={() => setShowNewLink(!showNewLink)}>
+              <AddIcon /> Add New Link
+            </Button>
 
             {showNewLink && (
               <div>
