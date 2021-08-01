@@ -53,8 +53,8 @@ router.patch('/edit/:linkid', async (req, res, next) => {
     let user = await User.findOne({ _id: token.sub });
     if(!user) return res.json({ success: false, msg: "no user has been found" });
 
-    if(!editable.includes(req.body.type)) return res.json({ sucess: false, msg: `you can only edit ${editable.join(", ")}.` });
-    if(!req.body.newValue) return res.json({ sucess: false, msg: "no newValue has been provided" });
+    //// THIS DOESNT WORK BECAUSE THERES NO REQ.BODY.TYPE ANYMORE
+    // if(!editable.includes(req.body.type)) return res.json({ sucess: false, msg: `you can only edit ${editable.join(", ")}.` });
 
     user.links.forEach(link => {
         if(link._id != req.params.linkid) return;
