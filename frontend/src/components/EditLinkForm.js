@@ -14,12 +14,24 @@ import { TextField } from "@material-ui/core";
 export default function FormDialog({ link }) {
   const [editing, setEditing] = useState(false);
   const [open, setOpen] = React.useState(false);
-  const { deleteLink } = useUser();
+  const { deleteLink, updateLink } = useUser();
+
+  const [tempName, setTempName] = useState(link.name);
+  const [tempLink, setTempLink] = useState(link.link);
+  const [tempDescription, setTempDescription] = useState(link.description);
 
   const handleClickOpen = () => {
     setOpen(true);
   };
   const handleEdit = () => {
+    if (editing) {
+      updateLink(link._id, {
+        name: tempName,
+        link: tempLink,
+        description: tempDescription,
+      });
+    }
+
     setEditing(!editing);
   };
 
@@ -32,6 +44,7 @@ export default function FormDialog({ link }) {
       location.reload();
     });
   };
+
   return (
     <span>
       <IconButton size="small" onClick={handleClickOpen}>
@@ -39,19 +52,44 @@ export default function FormDialog({ link }) {
       </IconButton>
       <Dialog open={open} onClose={handleClose} aria-labelledby="form-dialog-title">
         <DialogTitle id="form-dialog-title">
-          {editing ? <TextField label="Name" value={link.name}></TextField> : link.name}
+          {editing ? (
+            <TextField
+              label="Name"
+              name="name"
+              value={tempName}
+              onChange={(e) => {
+                setTempName(e.target.value);
+              }}
+            ></TextField>
+          ) : (
+            link.name
+          )}
         </DialogTitle>
         <DialogContent>
           <DialogContentText>
             {editing ? (
-              <TextField label="Link" value={link.link}></TextField>
+              <TextField
+                label="Link"
+                name="link"
+                value={tempLink}
+                onChange={(e) => {
+                  setTempLink(e.target.value);
+                }}
+              ></TextField>
             ) : (
               <a href={link.link}>{link.link}</a>
             )}
           </DialogContentText>
           <DialogContentText>
             {editing ? (
-              <TextField label="Description" value={link.description}></TextField>
+              <TextField
+                label="Description"
+                name="description"
+                value={tempDescription}
+                onChange={(e) => {
+                  setTempDescription(e.target.value);
+                }}
+              ></TextField>
             ) : (
               link.description
             )}

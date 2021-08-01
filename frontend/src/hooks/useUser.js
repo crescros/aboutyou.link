@@ -83,6 +83,9 @@ function useUser() {
   function updateUser(user) {
     return axios.patch("users/edit", user);
   }
+  function updateLink(linkId, link) {
+    return axios.patch("links/edit/" + linkId, link);
+  }
 
   return {
     users,
@@ -94,6 +97,7 @@ function useUser() {
     setToken,
     deleteLink,
     updateUser,
+    updateLink,
   };
 }
 
