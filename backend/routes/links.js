@@ -10,7 +10,7 @@ router.get('/protected', passport.authenticate('jwt', { session: false }), (req,
 
 router.post('/newentry', async (req, res, next) => {
     if(!req.headers.authorization)
-        return res.json({ success: false, msg: "you're not authenticated" });
+        return res.sendStatus(401);
     if(!req.body.link || !req.body.name)
         return res.json({ success: false, msg: "no link/name has been given" });
 
@@ -35,7 +35,7 @@ router.post('/newentry', async (req, res, next) => {
 
 router.get('/get', async (req, res, next) => {
     if(!req.headers.authorization)
-        return res.json({ success: false, msg: "you're not authenticated" });
+        return res.sendStatus(401);
     
     let token = utils.validateJWT(next, req.headers.authorization);
     let user = await User.findOne({ _id: token.sub });
@@ -47,7 +47,7 @@ router.get('/get', async (req, res, next) => {
 router.patch('/edit/:linkid', async (req, res, next) => {
     let editable = [ "name", "description", "link" ];
     if(!req.headers.authorization)
-        return res.json({ success: false, msg: "you're not authenticated" });
+        return res.sendStatus(401);
     
     let token = utils.validateJWT(next, req.headers.authorization);
     let user = await User.findOne({ _id: token.sub });
@@ -67,7 +67,7 @@ router.patch('/edit/:linkid', async (req, res, next) => {
 
 router.delete("/:linkid", async (req, res, next) => {
     if(!req.headers.authorization)
-        return res.json({ success: false, msg: "you're not authenticated" });
+        return res.sendStatus(401);
     
     let token = utils.validateJWT(next, req.headers.authorization);
     let user = await User.findOne({ _id: token.sub });

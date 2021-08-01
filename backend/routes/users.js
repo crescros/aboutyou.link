@@ -95,7 +95,8 @@ router.get('/get', async function(req, res, next) {
 });
 
 router.patch('/edit', async(req, res, next) => {
-    if(!req.headers.authorization) return res.sendStatus(401);
+    if(!req.headers.authorization)
+        return res.sendStatus(401);
     let token = utils.validateJWT(next, req.headers.authorization);
 
     let user = await User.findOne({ _id: token.sub });
