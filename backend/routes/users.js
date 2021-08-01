@@ -92,6 +92,32 @@ router.post('/register', function(req, res, next) {
 router.get('/get', async function(req, res, next) {
     if(!req.query.user) return res.json({ success: false, msg: "no user id has been provided" });
     return res.json({ success: true, user: await User.findOne({ _id: san(req.query.user) }) });
+});
+
+router.patch('/edit', async(req, res, next) => {
+    if(!req.headers.authorization) return res.sendStatus(401);
+    let token = utils.validateJWT(next, req.headers.authorization);
+
+    let user = await User.findOne({ _id: token.sub });
+    if(!user) {
+        res.statusCode = 401;
+        return res.json({ success: false, msg: 'no user was found' });
+    }
+
+    let editableFields = [
+        "username",
+        "bio"
+    ];
+
+    var result = Object.keys(req.body).map((key) => [String(key), req.body[key]]);
+
+    result.forEach(r => {
+        if(!editableFields.includes(r[0])) return;
+        user[r[0]] = r[1];
+    });
+
+    user.save();
+    return res.json({ success: true, user: user });
 })
 
 module.exports = router;
