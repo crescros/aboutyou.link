@@ -4,6 +4,7 @@ import { Switch, Route, Redirect } from "react-router-dom";
 import SignUp from "./SignUpForm";
 import Profile from "./Profile";
 import { useUser } from "../hooks";
+import OtherUser from "./OtherUser";
 
 export default function Routes() {
   const { setToken } = useUser();
@@ -25,8 +26,8 @@ export default function Routes() {
       <Route path="/app" exact>
         {localStorage.getItem("token") ? <Profile /> : <LoginForm />}
       </Route>
-      <Route path="/:user/">
-        <h1>loh1</h1>
+      <Route path="/:username/">
+        <OtherUser />
       </Route>
       <Route path="/" exact>
         <Redirect to="/app"></Redirect>
