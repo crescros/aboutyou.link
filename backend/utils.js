@@ -3,7 +3,7 @@ const jsonwebtoken = require('jsonwebtoken');
 const fs = require('fs');
 const path = require('path');
 const atob = require('atob');
-const fetch = require('node-fetch');
+const chalk = require('chalk');
 
 const pathToKey = path.join(__dirname, 'id_rsa_priv.pem');
 const PRIV_KEY = fs.readFileSync(pathToKey, 'utf8');
@@ -65,6 +65,11 @@ function beautifyUser(user) {
     return user;
 }
 
+function log(proc, msg) {
+    return console.log(chalk.blue(`[${proc}] -> ` + chalk.blue(msg)));
+}
+
+module.exports.log = log;
 module.exports.beautifyUser = beautifyUser;
 module.exports.validPassword = validPassword;
 module.exports.genPassword = genPassword;

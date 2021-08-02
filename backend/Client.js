@@ -8,14 +8,17 @@ const server = http.createServer(app);
 const rateLimit = require("express-rate-limit");
 const EventEmitter = require("events");
 const events = new EventEmitter();
+const { log } = require('./utils');
 
 class Client {
     warmDatabase() {
         require('./config/database');
+        log('DATABASE', 'Warming up.');
     }
 
     warmModels() {
         require('./models');
+        log('MODELS', 'Warmed up.');
     }
 
     get package() {
@@ -44,12 +47,8 @@ class Client {
 
         app.use(require('./routes'));
 
-        // app.get('/', (req, res) => {
-        //     res.sendFile(__dirname + '/index.html');
-        // });
-
         server.listen(config.express.port, () => {
-            console.log(`Listening to port ${config.express.port}.`);
+            log('EXPRESS', 'Listening.');
         });
     }
 

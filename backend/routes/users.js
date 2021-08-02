@@ -23,7 +23,7 @@ router.post('/login', function(req, res, next) {
             if (isValid) {
                 const tokenObject = utils.issueJWT(user);
                 res.set('Authorization', tokenObject.token);
-                //res.setHeader('Authorization', tokenObject.token);
+                utils.log('USERS', `Account logged in: ${user._id}`);
                 res.json({ success: true, token: tokenObject.token, expiresIn: tokenObject.expires });
             } else {
                 res.json({ success: false, msg: "you entered the wrong password" });
@@ -79,6 +79,7 @@ router.post('/register', function(req, res, next) {
 
                 newUser.save()
                 .then((user) => {
+                    utils.log('USERS', `New account registered: ${user._id}`);
                     res.json({ success: true, user: user });
                 });
             }

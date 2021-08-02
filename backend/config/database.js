@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
 const config = require('../config');
 mongoose.Promise = require("bluebird");
+const { log } = require('../utils');
 
 if(process.env.NODE_ENV === 'production') {
     mongoose.connect(config.mongodb.STRING_PROD, {
@@ -9,7 +10,7 @@ if(process.env.NODE_ENV === 'production') {
     });
 
     mongoose.connection.on('connected', () => {
-        console.log('DB is ready.');
+        log('DATABASE', 'Warmed up.');
     });
 } else {
     mongoose.connect(config.mongodb.STRING, {
@@ -18,6 +19,6 @@ if(process.env.NODE_ENV === 'production') {
     });
 
     mongoose.connection.on('connected', () => {
-        console.log('DB is ready. (DEV)');
+        log('DATABASE', 'Warmed up.');
     });
 };
