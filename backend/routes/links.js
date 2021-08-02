@@ -45,23 +45,31 @@ router.get('/get', async (req, res, next) => {
 });
 
 router.patch('/edit/:linkid', async (req, res, next) => {
-    let editable = [ "name", "description", "link" ];
-    if(!req.headers.authorization)
-        return res.sendStatus(401);
+    if(!req.headers.authorization) return res.sendStatus(401);
     
     let token = utils.validateJWT(next, req.headers.authorization);
     let user = await User.findOne({ _id: token.sub });
-    if(!user) return res.json({ success: false, msg: "no user has been found" });
+    if(!user) {
+        res.statusCode = 401;
+        return res.json({ success: false, msg: "no user has been found" });
+    }
 
-    //// THIS DOESNT WORK BECAUSE THERES NO REQ.BODY.TYPE ANYMORE
-    // if(!editable.includes(req.body.type)) return res.json({ sucess: false, msg: `you can only edit ${editable.join(", ")}.` });
+    let editableFields = [
+        "link",
+        "name",
+        "description"
+    ];
 
-    user.links.forEach(link => {
-        if(link._id != req.params.linkid) return;
-        link[req.body.type] = req.body.newValue;
-        user.save();
-    })
-                                        
+    var result = Object.keys(req.body).map((key) => [String(key), req.body[key]]);
+
+    result.forEach(r => {
+        if(!editableFields.includes(r[0])) return;
+        let link = user.links.find(elem => elem._id == req.params.linkid);
+        link[r[0]] = r[1];
+    });
+         
+    user.save();
+
     return res.json({ success: true, links: user.links });
 });
 

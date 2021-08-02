@@ -24,6 +24,7 @@
     "bluebird": "^3.7.2",
     "cors": "^2.8.5",
     "crypto": "^1.0.1",
+    "docstring": "^1.1.0",
     "dotenv": "^10.0.0",
     "epxress": "0.0.1-security",
     "express": "^4.17.1",
