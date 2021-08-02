@@ -19,7 +19,7 @@ function useUser() {
         if (response.data.success) {
           setToken(response.data.token);
           localStorage.setItem("user_id", jwt_decode(response.data.token).sub);
-          history.push("/");
+          history.push("/app");
           location.reload();
         } else {
           enqueueSnackbar("failed to connect to micron server", { variant: "error" });
@@ -32,7 +32,7 @@ function useUser() {
 
   function logout() {
     localStorage.clear();
-    history.push("/");
+    history.push("/app");
     location.reload();
   }
 
@@ -48,7 +48,7 @@ function useUser() {
       .then((res) => {
         if (res.data.success) {
           enqueueSnackbar("new user created", { variant: "success" });
-          history.push("/login");
+          history.push("/app/login");
         } else {
           enqueueSnackbar("failed to connect to micron server", { variant: "error" });
         }
@@ -86,6 +86,9 @@ function useUser() {
   function updateLink(linkId, link) {
     return axios.patch("links/edit/" + linkId, link);
   }
+  function getUser(userName) {
+    return axios.get(userName);
+  }
 
   return {
     users,
@@ -98,6 +101,7 @@ function useUser() {
     deleteLink,
     updateUser,
     updateLink,
+    getUser,
   };
 }
 
