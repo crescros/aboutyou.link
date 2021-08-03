@@ -1,6 +1,7 @@
 import React, { useEffect } from "react";
-import LoginForm from "./LoginForm";
 import { Switch, Route, Redirect } from "react-router-dom";
+
+import LoginForm from "./LoginForm";
 import SignUp from "./SignUpForm";
 import Profile from "./Profile";
 import { useUser } from "../hooks";

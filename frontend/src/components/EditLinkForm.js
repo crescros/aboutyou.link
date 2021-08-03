@@ -23,6 +23,7 @@ export default function FormDialog({ link }) {
   const handleClickOpen = () => {
     setOpen(true);
   };
+
   const handleEdit = () => {
     if (editing) {
       updateLink(link._id, {

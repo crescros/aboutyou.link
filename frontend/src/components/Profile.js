@@ -3,19 +3,17 @@ import { useUser } from "../hooks";
 import {
   Button,
   CircularProgress,
-  TextField,
   Toolbar,
   AppBar,
   Typography,
   Grid,
   Box,
-  IconButton,
 } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
-import AccountCircleIcon from "@material-ui/icons/AccountCircle";
-import EditIcon from "@material-ui/icons/Edit";
+
 import Link from "./Link";
-import AddIcon from "@material-ui/icons/Add";
+import UserCard from "./UserCard";
+import AddLinkForm from "./AddLinkForm";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -31,45 +29,13 @@ const useStyles = makeStyles((theme) => ({
 
 export default function Profile() {
   const classes = useStyles();
-  const { users, logout, createLink, updateUser } = useUser();
+  const { users, logout } = useUser();
   const [userData, setUserData] = useState();
-  const [newLinkData, setNewLinkData] = useState({});
-  const [showNewLink, setShowNewLink] = useState(false);
-  const [editingBio, setEditingBio] = useState(false);
-  const [tempBio, setTempBio] = useState("");
-
-  function handleChangeFormField(e) {
-    const tempLinkData = newLinkData;
-    newLinkData[e.target.name] = e.target.value;
-    setNewLinkData(tempLinkData);
-  }
-
-  function handleSubmitForm(e) {
-    e.preventDefault();
-    createLink(newLinkData).then(() => {
-      getLinks();
-    });
-  }
 
   function getLinks() {
     users().then((res) => {
       setUserData(res.data.user);
     });
-  }
-
-  function handleEditBio() {
-    if (editingBio) {
-      updateUser({ bio: tempBio }).then(() => {
-        getLinks();
-      });
-    } else {
-      setTempBio(userData.bio);
-    }
-    setEditingBio(!editingBio);
-  }
-
-  function handleChangeBio(e) {
-    setTempBio(e.target.value);
   }
 
   useEffect(() => {
@@ -96,43 +62,7 @@ export default function Profile() {
           <div>
             <Grid container>
               <Grid item>
-                <Box
-                  alignContent={"center"}
-                  bgcolor="white"
-                  py={2}
-                  px={4}
-                  borderRadius={16}
-                >
-                  <Typography variant="h4">
-                    <AccountCircleIcon color="primary" fontSize={"large"} />
-                    {userData.username}
-                  </Typography>
-                  <Box>
-                    {editingBio ? (
-                      <TextField value={tempBio} onChange={handleChangeBio}></TextField>
-                    ) : (
-                      <Typography gutterBottom component="span">
-                        {userData.bio}
-                      </Typography>
-                    )}
-                    <IconButton size="small" onClick={handleEditBio}>
-                      <EditIcon fontSize="small" />
-                    </IconButton>
-                  </Box>
-                  <Typography variant="body2">email: {userData.email}</Typography>
-                  <Typography variant="body2">
-                    {" "}
-                    joined {new Date(userData.createdAt).toLocaleDateString()}
-                  </Typography>
-                  <Typography variant="body2">
-                    {" "}
-                    admin: {userData.isAdmin ? "Yes" : "No"}
-                  </Typography>
-                  <Typography variant="body2">
-                    {" "}
-                    verified: {userData.verified.is ? "Yes" : "No"}
-                  </Typography>
-                </Box>
+                <UserCard userData={userData} editable={true} getLinks={getLinks} />
               </Grid>
             </Grid>
 
@@ -143,7 +73,7 @@ export default function Profile() {
                   <Box py={1} px={3}>
                     {userData.links.map((link) => (
                       <div key={link._id}>
-                        <Link link={link} />
+                        <Link link={link} editable={true} />
                       </div>
                     ))}
                   </Box>
@@ -153,50 +83,7 @@ export default function Profile() {
 
             <br />
 
-            <Button onClick={() => setShowNewLink(!showNewLink)}>
-              <AddIcon /> Add New Link
-            </Button>
-
-            {showNewLink && (
-              <div>
-                <div>
-                  <TextField
-                    variant="outlined"
-                    required
-                    fullWidth
-                    id="name"
-                    label="Link Name"
-                    name="name"
-                    onChange={handleChangeFormField}
-                  />
-                </div>
-                <div>
-                  <TextField
-                    variant="outlined"
-                    required
-                    fullWidth
-                    id="description"
-                    label="Link Description"
-                    name="description"
-                    onChange={handleChangeFormField}
-                  />
-                </div>
-                <div>
-                  <TextField
-                    variant="outlined"
-                    required
-                    fullWidth
-                    id="link"
-                    label="Link Url"
-                    name="link"
-                    onChange={handleChangeFormField}
-                  />
-                </div>
-                <div>
-                  <Button onClick={handleSubmitForm}>submit</Button>
-                </div>
-              </div>
-            )}
+            <AddLinkForm getLinks={getLinks} />
           </div>
         ) : (
           <CircularProgress />
