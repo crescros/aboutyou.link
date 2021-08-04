@@ -76,18 +76,18 @@ export default function FormDialog({ getLinks }) {
             ></TextField>
           </DialogContentText>
           <DialogContentText>
-            {tempName &&
+            {tempName && (
               <Box>
-                <Typography variant="caption">
-                  Preview
-                </Typography>
-                <Link link={{
-                  name: tempName,
-                  link: tempLink,
-                  description: tempDescription,
-                }} />
+                <Typography variant="caption">Preview</Typography>
+                <Link
+                  link={{
+                    name: tempName,
+                    link: tempLink,
+                    description: tempDescription,
+                  }}
+                />
               </Box>
-            }
+            )}
           </DialogContentText>
         </DialogContent>
 
